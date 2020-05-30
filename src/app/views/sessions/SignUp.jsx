@@ -1,32 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
+import { useHistory } from 'react-router-dom';
 import {
   Card,
-  Checkbox,
-  FormControlLabel,
   Grid,
   Button
 } from "@material-ui/core";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import { connect } from "react-redux";
+import API from '../../helpers/API';
 
-class SignUp extends Component {
-  state = {
-    username: "",
-    email: "",
-    password: "",
-    agreement: ""
-  };
 
-  handleChange = event => {
-    event.persist();
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
 
-  handleFormSubmit = event => {};
-  render() {
-    let { username, email, password } = this.state;
+function SignUp ()  {
+  const history = useHistory();
+
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  
+  const handleFormSubmit = async () => {
+      await  API.post('api/auth/signup', {name, email, password});
+      history.push("/session/signin");
+    };
+
+
     return (
       <div className="signup flex justify-center w-full h-full-screen">
         <div className="p-8">
@@ -42,23 +39,23 @@ class SignUp extends Component {
               </Grid>
               <Grid item lg={7} md={7} sm={7} xs={12}>
                 <div className="p-9 h-full">
-                  <ValidatorForm ref="form" onSubmit={this.handleFormSubmit}>
+                  <ValidatorForm onSubmit={handleFormSubmit}>
                     <TextValidator
                       className="mb-6 w-full"
                       variant="outlined"
-                      label="Username"
-                      onChange={this.handleChange}
+                      label="Օգտանուն"
+                      onChange={e => setName(e.target.value)}
                       type="text"
-                      name="username"
-                      value={username}
+                      name="name"
+                      value={name}
                       validators={["required"]}
                       errorMessages={["this field is required"]}
                     />
                     <TextValidator
                       className="mb-6 w-full"
                       variant="outlined"
-                      label="Email"
-                      onChange={this.handleChange}
+                      label="Մեյլ"
+                      onChange={e => setEmail(e.target.value)}
                       type="email"
                       name="email"
                       value={email}
@@ -70,21 +67,14 @@ class SignUp extends Component {
                     />
                     <TextValidator
                       className="mb-4 w-full"
-                      label="Password"
+                      label="Գաղտնաբառ"
                       variant="outlined"
-                      onChange={this.handleChange}
+                      onChange={e => setPassword(e.target.value)}
                       name="password"
                       type="password"
                       value={password}
                       validators={["required"]}
                       errorMessages={["this field is required"]}
-                    />
-                    <FormControlLabel
-                      className="mb-4"
-                      name="agreement"
-                      onChange={this.handleChange}
-                      control={<Checkbox />}
-                      label="I have read and agree to the terms of service."
                     />
                     <div className="flex items-center">
                       <Button
@@ -93,16 +83,16 @@ class SignUp extends Component {
                         color="primary"
                         type="submit"
                       >
-                        Sign up
+                        Գրանցվել
                       </Button>
-                      <span className="mx-2 ml-5">or</span>
+                      <span className="mx-2 ml-5">կամ</span>
                       <Button
                         className="capitalize"
                         onClick={() =>
-                          this.props.history.push("/session/signin")
+                          history.push("/session/signin")
                         }
                       >
-                        Sign in
+                        Մուտք գործել
                       </Button>
                     </div>
                   </ValidatorForm>
@@ -113,11 +103,6 @@ class SignUp extends Component {
         </div>
       </div>
     );
-  }
 }
 
-const mapStateToProps = state => ({
-  // setUser: PropTypes.func.isRequired
-});
-
-export default connect(mapStateToProps, {})(SignUp);
+export default SignUp;
