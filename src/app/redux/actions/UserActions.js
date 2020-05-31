@@ -17,7 +17,6 @@ export function setUserData(user) {
 export function logoutUser() {
   return dispatch => {
     jwtAuthService.logout();
-
     history.push({
       pathname: "/session/signin"
     });

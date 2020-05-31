@@ -10,7 +10,6 @@ import { MatxMenu, MatxSearchBox } from "matx";
 import { isMdScreen, classList } from "utils";
 import NotificationBar from "../SharedCompoents/NotificationBar";
 import { Link } from "react-router-dom";
-import ShoppingCart from "../SharedCompoents/ShoppingCart";
 
 const styles = theme => ({
   topbar: {
@@ -68,6 +67,7 @@ class Layout1Topbar extends Component {
   render() {
     let { classes, fixed } = this.props;
 
+    console.log(this.props.user)
     return (
       <div className={`topbar ${classes.topbar}`}>
         <div className={classList({ "topbar-hold": true, fixed: fixed })}>
@@ -80,7 +80,7 @@ class Layout1Topbar extends Component {
                 <Icon>menu</Icon>
               </IconButton>
 
-              <div className="hide-on-mobile">
+              {/* <div className="hide-on-mobile">
                 <IconButton>
                   <Icon>mail_outline</Icon>
                 </IconButton>
@@ -92,22 +92,22 @@ class Layout1Topbar extends Component {
                 <IconButton>
                   <Icon>star_outline</Icon>
                 </IconButton>
-              </div>
+              </div> */}
             </div>
             <div className="flex items-center">
-              <MatxSearchBox />
+              {/* <MatxSearchBox /> */}
 
               <NotificationBar />
 
-              <ShoppingCart></ShoppingCart>
-
+              {/* <ShoppingCart></ShoppingCart> */}
               <MatxMenu
                 menuButton={
-                  <img
-                    className="mx-2 align-middle circular-image-small cursor-pointer"
-                    src="/assets/images/face-6.jpg"
-                    alt="user"
-                  />
+                  <h5 className="mx-2 align-middle text-white cursor-pointer">{this.props.user && this.props.user.name}</h5>
+                  // <img
+                  //   className="mx-2 align-middle circular-image-small cursor-pointer"
+                  //   src="/assets/images/face-6.jpg"
+                  //   alt="user"
+                  // />
                 }
               >
                 <MenuItem>
@@ -154,7 +154,8 @@ Layout1Topbar.propTypes = {
 const mapStateToProps = state => ({
   setLayoutSettings: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  settings: state.layout.settings
+  settings: state.layout.settings,
+  user: state.user,
 });
 
 export default withStyles(styles, { withTheme: true })(

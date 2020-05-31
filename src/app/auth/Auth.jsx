@@ -4,15 +4,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { setUserData } from "../redux/actions/UserActions";
 import { getNavigationByUser } from "../redux/actions/NavigationAction";
-import jwtAuthService from "../services/jwtAuthService";
 import localStorageService from "../services/localStorageService";
-// import firebaseAuthService from "../services/firebase/firebaseAuthService";
 import history from "history.js";
 
-const checkJwtAuth = async setUserData => {
-  // You need to send token to your server to check token is valid
-  // modify loginWithToken method in jwtService
-  let user = await jwtAuthService.loginWithToken();
+const checkJwtAuth = setUserData => {
+  const user = localStorageService.getItem("auth_user");
   if (user) setUserData(user);
   else
     history.push({
@@ -20,18 +16,6 @@ const checkJwtAuth = async setUserData => {
     });
   return user;
 };
-
-// const checkFirebaseAuth = () => {
-//   firebaseAuthService.checkAuthStatus(user => {
-//     if (user) {
-//       console.log(user.uid);
-//       console.log(user.email);
-//       console.log(user.emailVerified);
-//     } else {
-//       console.log("not logged in");
-//     }
-//   });
-// };
 
 const Auth = ({ children, setUserData, getNavigationByUser }) => {
   setUserData(localStorageService.getItem("auth_user"));
