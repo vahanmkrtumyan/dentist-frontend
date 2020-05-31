@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   Card,
-  Checkbox,
-  FormControlLabel,
   Grid,
   Button,
   CircularProgress
@@ -12,6 +10,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+
 
 import { loginWithEmailAndPassword } from "../../redux/actions/LoginActions";
 
@@ -31,9 +30,8 @@ const styles = theme => ({
 
 class SignIn extends Component {
   state = {
-    email: "watson@example.com",
-    password: "testpass",
-    agreement: ""
+    email: "",
+    password: ""
   };
   handleChange = event => {
     event.persist();
@@ -85,13 +83,6 @@ class SignIn extends Component {
                       validators={["required"]}
                       errorMessages={["this field is required"]}
                     />
-                    <FormControlLabel
-                      className="mb-3"
-                      name="agreement"
-                      onChange={this.handleChange}
-                      control={<Checkbox checked />}
-                      label="I have read and agree to the terms of service."
-                    />
                     <div className="flex flex-wrap items-center mb-4">
                       <div className={classes.wrapper}>
                         <Button
@@ -100,7 +91,7 @@ class SignIn extends Component {
                           disabled={this.props.login.loading}
                           type="submit"
                         >
-                          Sign in to Enter Dashboard
+                          Մուտք գործել
                         </Button>
                         {this.props.login.loading && (
                           <CircularProgress
@@ -109,14 +100,14 @@ class SignIn extends Component {
                           />
                         )}
                       </div>
-                      <span className="mr-2 ml-5">or</span>
+                      <span className="mr-2 ml-5">կամ</span>
                       <Button
                         className="capitalize"
                         onClick={() =>
                           this.props.history.push("/session/signup")
                         }
                       >
-                        Sign up
+                        Գրանցվել
                       </Button>
                     </div>
                     <Button
@@ -125,7 +116,7 @@ class SignIn extends Component {
                         this.props.history.push("/session/forgot-password")
                       }
                     >
-                      Forgot password?
+                      Մոռացե՞լ եք գաղտնաբառը։
                     </Button>
                   </ValidatorForm>
                 </div>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import localStorageService from "./localStorageService";
+import API from '../helpers/API';
 
 class JwtAuthService {
 
@@ -18,20 +19,13 @@ class JwtAuthService {
   // Your server will return user object & a Token
   // User should have role property
   // You can define roles in app/auth/authRoles.js
-  loginWithEmailAndPassword = (email, password) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(this.user);
-      }, 1000);
-    }).then(data => {
-      // Login successful
-      // Save token
-      this.setSession(data.token);
+  loginWithEmailAndPassword = async (email, password) => {
+    const data = await API.post('api/auth/login', {email, password});
+    this.setSession(data.token);
       // Set user
       this.setUser(data);
       return data;
-    });
-  };
+    };
 
   // You need to send http requst with existing token to your server to check token is valid
   // This method is being used when user logged in & app is reloaded
