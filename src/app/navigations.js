@@ -21,6 +21,11 @@ export const navigations = [
     ]
   },
   {
+    name: "Պացիենտներ",
+    path: "/clients",
+    icon: "recent_actors"
+  },
+  {
     name: "Drag and Drop",
     icon: "control_camera",
     path: "/others/drag-and-drop"
