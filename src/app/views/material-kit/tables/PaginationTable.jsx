@@ -1,85 +1,14 @@
-import React from "react";
+import * as React from "react";
 import {
-    IconButton,
     Table,
     TableHead,
     TableBody,
     TableRow,
     TableCell,
-    Icon,
     TablePagination
 } from "@material-ui/core";
-import {SimpleCard} from "../../../../matx";
-import FormDialog from "../dialog/FormDialog";
-import AddClient from "../../clients/AddClient";
 
-const subscribarList = [
-    {
-        name: "john doe",
-        date: "18 january, 2019",
-        amount: 1000,
-        status: "close",
-        company: "ABC Fintech LTD."
-    },
-    {
-        name: "kessy bryan",
-        date: "10 january, 2019",
-        amount: 9000,
-        status: "open",
-        company: "My Fintech LTD."
-    },
-    {
-        name: "kessy bryan",
-        date: "10 january, 2019",
-        amount: 9000,
-        status: "open",
-        company: "My Fintech LTD."
-    },
-    {
-        name: "james cassegne",
-        date: "8 january, 2019",
-        amount: 5000,
-        status: "close",
-        company: "Collboy Tech LTD."
-    },
-    {
-        name: "lucy brown",
-        date: "1 january, 2019",
-        amount: 89000,
-        status: "open",
-        company: "ABC Fintech LTD."
-    },
-    {
-        name: "lucy brown",
-        date: "1 january, 2019",
-        amount: 89000,
-        status: "open",
-        company: "ABC Fintech LTD."
-    },
-    {
-        name: "lucy brown",
-        date: "1 january, 2019",
-        amount: 89000,
-        status: "open",
-        company: "ABC Fintech LTD."
-    },
-    {
-        name: "lucy brown",
-        date: "1 january, 2019",
-        amount: 89000,
-        status: "open",
-        company: "ABC Fintech LTD."
-    },
-    {
-        name: "lucy brown",
-        date: "1 january, 2019",
-        amount: 89000,
-        status: "open",
-        company: "ABC Fintech LTD."
-    }
-];
-
-const PaginationTable = () => {
+const PaginationTable = ({thead, bodyData}) => {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
 
@@ -93,45 +22,31 @@ const PaginationTable = () => {
 
     return (
         <div className="w-full overflow-auto">
-            <AddClient/>
             <Table className="whitespace-pre">
                 <TableHead>
                     <TableRow>
-                        <TableCell className="px-0">Անուն Ազգանուն</TableCell>
-                        <TableCell className="px-0">Հեռ․</TableCell>
-                        <TableCell className="px-0">Գրանցման ամսաթիվ</TableCell>
-                        <TableCell className="px-0">Ծննդյան ամսաթիվ</TableCell>
-                        <TableCell className="px-0">Էլ․ Հասցե</TableCell>
-                        <TableCell className="px-0">կարգավորումներ</TableCell>
+                        {thead?.map((name) => {
+                            return <TableCell className="px-0" key={name}>{name}</TableCell>
+                        })}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {subscribarList
-                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((subscriber, index) => (
-                            <TableRow key={index}>
-                                <TableCell className="px-0 capitalize" align="left">
-                                    {subscriber.name}
-                                </TableCell>
-                                <TableCell className="px-0 capitalize" align="left">
-                                    {subscriber.company}
-                                </TableCell>
-                                <TableCell className="px-0 capitalize" align="left">
-                                    {subscriber.date}
-                                </TableCell>
-                                <TableCell className="px-0 capitalize">
-                                    {subscriber.status}
-                                </TableCell>
-                                <TableCell className="px-0 capitalize">
-                                    ${subscriber.amount}
-                                </TableCell>
-                                <TableCell className="px-0">
-                                    <IconButton>
-                                        <Icon color="error">close</Icon>
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                    {bodyData?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((tableRow, index) => {
+                                console.log(bodyData)
+                                return (
+                                    <TableRow key={index}>
+                                        {thead.map((thName, ind) => {
+                                            return (
+                                                <React.Fragment key={ind}>
+                                                    {tableRow[thName]}
+                                                </React.Fragment>
+                                            )
+                                        })}
+                                    </TableRow>
+                                )
+                            }
+                        )}
                 </TableBody>
             </Table>
 
@@ -139,7 +54,7 @@ const PaginationTable = () => {
                 className="px-4"
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={subscribarList.length}
+                count={bodyData?.length || 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{
@@ -155,4 +70,4 @@ const PaginationTable = () => {
     );
 };
 
-export default PaginationTable;
+export default React.memo(PaginationTable);

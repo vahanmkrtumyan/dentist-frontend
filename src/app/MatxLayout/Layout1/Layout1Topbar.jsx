@@ -67,7 +67,7 @@ class Layout1Topbar extends Component {
   render() {
     let { classes, fixed } = this.props;
 
-    console.log(this.props.user)
+    console.log(this.props.user, "qqqqq")
     return (
       <div className={`topbar ${classes.topbar}`}>
         <div className={classList({ "topbar-hold": true, fixed: fixed })}>

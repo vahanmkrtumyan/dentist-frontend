@@ -9,7 +9,11 @@ import history from "history.js";
 
 const checkJwtAuth = setUserData => {
   const user = localStorageService.getItem("auth_user");
-  if (user) setUserData(user);
+  console.log(user, 1111111111)
+  if (user) {
+    setUserData(user);
+    history.push({pathname: "/"})
+  }
   else
     history.push({
       pathname: "/session/signin"
