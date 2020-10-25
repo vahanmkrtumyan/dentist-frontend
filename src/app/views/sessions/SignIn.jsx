@@ -1,22 +1,17 @@
 import React, { Component } from "react";
-import {
-  Card,
-  Grid,
-  Button,
-  CircularProgress
-} from "@material-ui/core";
+import { Card, Grid, Button, CircularProgress } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-
+import history from "history.js";
 
 import { loginWithEmailAndPassword } from "../../redux/actions/LoginActions";
 
-const styles = theme => ({
+const styles = (theme) => ({
   wrapper: {
-    position: "relative"
+    position: "relative",
   },
 
   buttonProgress: {
@@ -24,23 +19,26 @@ const styles = theme => ({
     top: "50%",
     left: "50%",
     marginTop: -12,
-    marginLeft: -12
-  }
+    marginLeft: -12,
+  },
 });
 
 class SignIn extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
   };
-  handleChange = event => {
+  handleChange = (event) => {
     event.persist();
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
-  handleFormSubmit = event => {
-    this.props.loginWithEmailAndPassword({ ...this.state });
+  handleFormSubmit = async () => {
+    await this.props.loginWithEmailAndPassword({ ...this.state });
+    history.push({
+      pathname: "/dashboard/analytics",
+    });
   };
   render() {
     let { email, password } = this.state;
@@ -69,7 +67,7 @@ class SignIn extends Component {
                       validators={["required", "isEmail"]}
                       errorMessages={[
                         "this field is required",
-                        "email is not valid"
+                        "email is not valid",
                       ]}
                     />
                     <TextValidator
@@ -129,9 +127,9 @@ class SignIn extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   loginWithEmailAndPassword: PropTypes.func.isRequired,
-  login: state.login
+  login: state.login,
 });
 export default withStyles(styles, { withTheme: true })(
   withRouter(connect(mapStateToProps, { loginWithEmailAndPassword })(SignIn))
