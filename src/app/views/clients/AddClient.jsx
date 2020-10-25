@@ -140,6 +140,7 @@ export default function AddClient() {
 
   function handleDateChange(date) {
     let newState = { ...state };
+    date.setHours(0, 0, 0, 0);
     newState.dateOfBirth = date;
     setState(newState);
   }
