@@ -11,28 +11,28 @@ import { isMdScreen, classList } from "utils";
 import NotificationBar from "../SharedCompoents/NotificationBar";
 import { Link } from "react-router-dom";
 
-const styles = theme => ({
+const styles = (theme) => ({
   topbar: {
     "& .topbar-hold": {
       backgroundColor: theme.palette.primary.main,
       height: "80px",
       "&.fixed": {
         boxShadow: theme.shadows[8],
-        height: "64px"
-      }
-    }
+        height: "64px",
+      },
+    },
   },
   menuItem: {
     display: "flex",
     alignItems: "center",
-    minWidth: 185
-  }
+    minWidth: 185,
+  },
 });
 
 class Layout1Topbar extends Component {
   state = {};
 
-  updateSidebarMode = sidebarSettings => {
+  updateSidebarMode = (sidebarSettings) => {
     let { settings, setLayoutSettings } = this.props;
 
     setLayoutSettings({
@@ -41,9 +41,9 @@ class Layout1Topbar extends Component {
         ...settings.layout1Settings,
         leftSidebar: {
           ...settings.layout1Settings.leftSidebar,
-          ...sidebarSettings
-        }
-      }
+          ...sidebarSettings,
+        },
+      },
     });
   };
 
@@ -67,7 +67,6 @@ class Layout1Topbar extends Component {
   render() {
     let { classes, fixed } = this.props;
 
-    console.log(this.props.user, "qqqqq")
     return (
       <div className={`topbar ${classes.topbar}`}>
         <div className={classList({ "topbar-hold": true, fixed: fixed })}>
@@ -102,7 +101,9 @@ class Layout1Topbar extends Component {
               {/* <ShoppingCart></ShoppingCart> */}
               <MatxMenu
                 menuButton={
-                  <h5 className="mx-2 align-middle text-white cursor-pointer">{this.props.user && this.props.user.name}</h5>
+                  <h5 className="mx-2 align-middle text-white cursor-pointer">
+                    {this.props.user && this.props.user.name}
+                  </h5>
                   // <img
                   //   className="mx-2 align-middle circular-image-small cursor-pointer"
                   //   src="/assets/images/face-6.jpg"
@@ -148,10 +149,10 @@ class Layout1Topbar extends Component {
 Layout1Topbar.propTypes = {
   setLayoutSettings: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  settings: PropTypes.object.isRequired
+  settings: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   setLayoutSettings: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   settings: state.layout.settings,
