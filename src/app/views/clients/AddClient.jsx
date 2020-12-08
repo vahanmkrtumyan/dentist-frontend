@@ -123,9 +123,6 @@ export default function AddClient() {
           <Button variant="outlined" color="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
-            Subscribe
-          </Button>
         </DialogActions>
       </Dialog>
     </div>
