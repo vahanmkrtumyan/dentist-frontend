@@ -23,7 +23,7 @@ function Clients() {
 
   function handleClick(index) {
     setClient(clients[index]);
-    history.push('/clent');
+    history.push('/client');
   }
 
   const listData = clients.map((item) => {
