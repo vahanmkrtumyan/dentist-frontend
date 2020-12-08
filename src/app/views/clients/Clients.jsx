@@ -4,9 +4,14 @@ import PaginationTable from '../material-kit/tables/PaginationTable';
 import { TableCell } from '@material-ui/core';
 import AddClient from './AddClient';
 import API from '../../services/api';
+import { ClientContext } from './../../clientContext';
+import { useHistory } from 'react-router-dom';
 
 function Clients() {
+  const { client, setClient } = React.useContext(ClientContext);
   const [clients, setClients] = useState([]);
+
+  let history = useHistory();
 
   useEffect(() => {
     API.getClients().then((data) => setClients(data));
@@ -16,31 +21,31 @@ function Clients() {
     API.getClients(search).then((data) => setClients(data));
   }
 
+  function handleClick(index) {
+    setClient(clients[index]);
+    history.push('/clent');
+  }
+
   const listData = clients.map((item) => {
     return {
-      Անուն: (
-        <TableCell className='px-0' align='left'>
-          {' '}
-          {item.name}
-        </TableCell>
-      ),
+      Անուն: <TableCell style={{ cursor: 'pointer' }}> {item.name}</TableCell>,
       Ծնված: (
-        <TableCell className='px-0' align='left'>
+        <TableCell className='px-0' align='left' style={{ cursor: 'pointer' }}>
           {item.dateOfBirth.slice(0, 10)}
         </TableCell>
       ),
       Հեռախոս: (
-        <TableCell className='px-0' align='left'>
+        <TableCell className='px-0' align='left' style={{ cursor: 'pointer' }}>
           {item.mobile}
         </TableCell>
       ),
       'Էլ հասցե': (
-        <TableCell className='px-0' align='left'>
+        <TableCell className='px-0' align='left' style={{ cursor: 'pointer' }}>
           {item.email}
         </TableCell>
       ),
       Պարտք: (
-        <TableCell className='px-0' align='left'>
+        <TableCell className='px-0' align='left' style={{ cursor: 'pointer' }}>
           {item.debt || 0}
         </TableCell>
       ),
@@ -60,6 +65,7 @@ function Clients() {
       <SimpleCard title='Pagination Table'>
         <AddClient handleSearch={handleSearch} />
         <PaginationTable
+          handleClick={handleClick}
           bodyData={listData}
           thead={['Անուն', 'Ծնված', 'Հեռախոս', 'Էլ հասցե', 'Պարտք']}
         />

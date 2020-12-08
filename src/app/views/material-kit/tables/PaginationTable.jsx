@@ -8,7 +8,7 @@ import {
   TablePagination,
 } from '@material-ui/core';
 
-const PaginationTable = ({ thead, bodyData }) => {
+const PaginationTable = ({ thead, bodyData, handleClick }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
 
@@ -22,7 +22,7 @@ const PaginationTable = ({ thead, bodyData }) => {
 
   return (
     <div className='w-full overflow-auto'>
-      <Table>
+      <Table className='whitespace-pre'>
         <TableHead>
           <TableRow>
             {thead?.map((name) => {
@@ -42,6 +42,7 @@ const PaginationTable = ({ thead, bodyData }) => {
               console.log(bodyData);
               return (
                 <TableRow
+                  onClick={() => handleClick(index)}
                   key={index}
                   style={{ backgroundColor: color, border: 'none' }}
                 >
