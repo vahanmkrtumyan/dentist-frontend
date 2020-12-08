@@ -21,9 +21,11 @@
     "echarts": "^4.2.1",
     "echarts-for-react": "^2.0.15-beta.0",
     "firebase": "^6.6.1",
+    "formik": "^2.2.5",
     "globalize": "^0.1.1",
     "history": "^4.10.0",
     "lodash": "^4.17.15",
+    "material-ui-search-bar": "^1.0.0",
     "node-sass": "^4.13.1",
     "notistack": "^0.8.8",
     "prop-types": "^15.7.2",
@@ -52,7 +54,8 @@
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.14",
     "swiper": "^4.5.0",
-    "victory": "^32.3.3"
+    "victory": "^32.3.3",
+    "yup": "^0.32.6"
   },
   "scripts": {
     "start": "react-app-rewired start",

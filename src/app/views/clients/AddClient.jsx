@@ -1,110 +1,118 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import {
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  Icon,
-  Radio,
-  RadioGroup,
-  Select,
-} from "@material-ui/core";
-import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Grid, Icon } from '@material-ui/core';
+import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import API from "../../services/api";
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import SearchBar from 'material-ui-search-bar';
+import API from '../../services/api';
+import { makeStyles } from '@material-ui/core/styles';
 
-export default function AddClient() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginRight: '20px',
+    '@media screen and (max-width: 767px)': {
+      marginRight: '0',
+      marginBottom: '20px',
+    },
+  },
+  progress: {
+    margin: theme.spacing(2),
+  },
+}));
+
+export default function AddClient({ handleSearch }) {
+  const classes = useStyles();
+
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState({
-    name: "",
-    mobile: "",
-    email: "",
-    dateOfBirth: {},
+    name: '',
+    mobile: '',
+    email: '',
+    dateOfBirth: new Date(),
   });
-
-  function handleClickOpen() {
-    setOpen(true);
-  }
-
-  function handleClose() {
-    setOpen(false);
-  }
+  const [search, setSearch] = React.useState('');
 
   let { name, email, mobile, dateOfBirth } = state;
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Նոր Պացիենտ
-      </Button>
+      <div className='clients__addSearch'>
+        <Button
+          variant='contained'
+          color='primary'
+          className={classes.root}
+          onClick={handleClickOpen}
+        >
+          Նոր Պացիենտ
+        </Button>
+        <SearchBar
+          value={search}
+          onChange={(newValue) => setSearch(newValue)}
+          onRequestSearch={() => handleSearch(search)}
+        />
+      </div>
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="form-dialog-title"
+        aria-labelledby='form-dialog-title'
       >
-        <DialogTitle id="form-dialog-title">Ավելացնել նոր Պացիենտ</DialogTitle>
+        <DialogTitle id='form-dialog-title'>Ավելացնել նոր Պացիենտ</DialogTitle>
+
         <DialogContent>
           <div>
-            <ValidatorForm
-              // ref="form"
-              onSubmit={handleSubmit}
-              onError={(errors) => null}
-            >
+            <ValidatorForm onSubmit={handleSubmit} onError={(errors) => null}>
               <Grid container spacing={6}>
                 <Grid item lg={6} md={6} sm={12} xs={12}>
                   <TextValidator
-                    className="mb-4 w-full"
-                    label="Անուն Ազգանուն"
+                    className='mb-4 w-full'
+                    label='Անուն Ազգանուն'
                     onChange={handleChange}
-                    type="text"
-                    name="name"
+                    type='text'
+                    name='name'
                     value={name}
-                    validators={["required"]}
-                    errorMessages={["this field is required"]}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                   />
                   <TextValidator
-                    className="mb-4 w-full"
-                    label="Էլ․ Հասցե"
+                    className='mb-4 w-full'
+                    label='Էլ․ Հասցե'
                     onChange={handleChange}
-                    type="email"
-                    name="email"
+                    type='email'
+                    name='email'
                     value={email}
-                    validators={["required", "isEmail"]}
+                    validators={['required', 'isEmail']}
                     errorMessages={[
-                      "this field is required",
-                      "email is not valid",
+                      'this field is required',
+                      'email is not valid',
                     ]}
                   />
                 </Grid>
-
                 <Grid item lg={6} md={6} sm={12} xs={12}>
                   <TextValidator
-                    className="mb-4 w-full"
-                    label="Հեռախոս"
+                    className='mb-4 w-full'
+                    label='Հեռախոս'
                     onChange={handleChange}
-                    type="text"
-                    name="mobile"
+                    type='text'
+                    name='mobile'
                     value={mobile}
-                    validators={["required"]}
-                    errorMessages={["this field is required"]}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                   />
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
-                      className="mb-4 w-full"
-                      margin="none"
-                      label="Ծննդյան տարեթիվ"
-                      name="dateOfBirth"
+                      className='mb-4 w-full'
+                      margin='none'
+                      label='Ծննդյան տարեթիվ'
+                      name='dateOfBirth'
                       autoOk={true}
-                      format="d/MM/yy"
+                      format='d/MM/yy'
                       disableFuture={true}
                       value={dateOfBirth}
                       onChange={handleDateChange}
@@ -112,15 +120,15 @@ export default function AddClient() {
                   </MuiPickersUtilsProvider>
                 </Grid>
               </Grid>
-              <Button color="primary" variant="contained" type="submit">
+              <Button color='primary' variant='contained' type='submit'>
                 <Icon>send</Icon>
-                <span className="pl-2 capitalize">Submit</span>
+                <span className='pl-2 capitalize'>Submit</span>
               </Button>
             </ValidatorForm>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" color="secondary" onClick={handleClose}>
+          <Button variant='outlined' color='secondary' onClick={handleClose}>
             Cancel
           </Button>
         </DialogActions>
@@ -143,8 +151,15 @@ export default function AddClient() {
   }
 
   async function handleSubmit() {
-    console.log(state);
-    const client = await API.createClient(state);
-    console.log(client);
+    await API.createClient(state);
+    setOpen(false);
+  }
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
   }
 }
