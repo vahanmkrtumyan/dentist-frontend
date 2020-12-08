@@ -20,6 +20,7 @@ function Clients() {
     return {
       Անուն: (
         <TableCell className='px-0' align='left'>
+          {' '}
           {item.name}
         </TableCell>
       ),
