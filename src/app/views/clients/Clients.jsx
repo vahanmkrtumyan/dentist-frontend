@@ -21,6 +21,10 @@ function Clients() {
     API.getClients(search).then((data) => setClients(data));
   }
 
+  function handleAdd(newClient) {
+    setClients([newClient, ...clients]);
+  }
+
   function handleClick(index) {
     setClient(clients[index]);
     history.push('/client');
@@ -63,7 +67,7 @@ function Clients() {
         />
       </div>
       <SimpleCard title='Pagination Table'>
-        <AddClient handleSearch={handleSearch} />
+        <AddClient handleSearch={handleSearch} handleAdd={handleAdd} />
         <PaginationTable
           handleClick={handleClick}
           bodyData={listData}

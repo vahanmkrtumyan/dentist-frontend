@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import AppContext from 'app/appContext';
+import { ClientContext } from 'app/clientContext';
 
 const Client = () => {
-  const { client } = React.useContext(AppContext);
+  const { client, setClient } = React.useContext(ClientContext);
+
   console.log(client);
   return <div>a</div>;
 };

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddClient({ handleSearch }) {
+export default function AddClient({ handleSearch, handleAdd }) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -145,13 +145,16 @@ export default function AddClient({ handleSearch }) {
 
   function handleDateChange(date) {
     let newState = { ...state };
-    date.setHours(0, 0, 0, 0);
-    newState.dateOfBirth = date;
+    if (date) {
+      date.setHours(0, 0, 0, 0);
+      newState.dateOfBirth = date;
+    }
     setState(newState);
   }
 
   async function handleSubmit() {
-    await API.createClient(state);
+    const client = await API.createClient(state);
+    handleAdd(client);
     setOpen(false);
   }
 
