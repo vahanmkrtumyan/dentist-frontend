@@ -13,19 +13,23 @@ import { Store } from "./redux/Store";
 import Auth from "./auth/Auth";
 import MatxLayout from "./MatxLayout/MatxLayoutSFC";
 import AuthGuard from "./auth/AuthGuard";
+import theme from "./theme";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 const App = () => {
   return (
     <AppContext.Provider value={{ routes }}>
       <Provider store={Store}>
         <MatxTheme>
-          <Auth>
-            <Router history={history}>
-              <AuthGuard>
-                <MatxLayout />
-              </AuthGuard>
-            </Router>
-          </Auth>
+          <ThemeProvider theme={theme}>
+            <Auth>
+              <Router history={history}>
+                <AuthGuard>
+                  <MatxLayout />
+                </AuthGuard>
+              </Router>
+            </Auth>
+          </ThemeProvider>
         </MatxTheme>
       </Provider>
     </AppContext.Provider>
