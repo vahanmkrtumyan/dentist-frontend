@@ -24,6 +24,7 @@
     "formik": "^2.2.5",
     "globalize": "^0.1.1",
     "history": "^4.10.0",
+    "jquery": "^3.5.1",
     "lodash": "^4.17.15",
     "material-ui-search-bar": "^1.0.0",
     "node-sass": "^4.13.1",
@@ -53,6 +54,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.14",
+    "svg-inline-react": "^3.2.0",
     "swiper": "^4.5.0",
     "victory": "^32.3.3",
     "yup": "^0.32.6"

@@ -87,11 +87,8 @@ export default function AddClient({ handleSearch, handleAdd }) {
                     type='email'
                     name='email'
                     value={email}
-                    validators={['required', 'isEmail']}
-                    errorMessages={[
-                      'this field is required',
-                      'email is not valid',
-                    ]}
+                    validators={['isEmail']}
+                    errorMessages={['email is not valid']}
                   />
                 </Grid>
                 <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -153,7 +150,11 @@ export default function AddClient({ handleSearch, handleAdd }) {
   }
 
   async function handleSubmit() {
-    const client = await API.createClient(state);
+    const clientToSave = { ...state };
+    if (!state.email) {
+      delete state.email;
+    }
+    const client = await API.createClient(clientToSave);
     handleAdd(client);
     setOpen(false);
   }

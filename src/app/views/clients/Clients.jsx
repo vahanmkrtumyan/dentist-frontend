@@ -8,7 +8,7 @@ import { ClientContext } from './../../clientContext';
 import { useHistory } from 'react-router-dom';
 
 function Clients() {
-  const { client, setClient } = React.useContext(ClientContext);
+  const { setClient } = React.useContext(ClientContext);
   const [clients, setClients] = useState([]);
 
   let history = useHistory();
