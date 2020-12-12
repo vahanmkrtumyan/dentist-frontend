@@ -41,3 +41,19 @@ code {
 .tooth {
   cursor: pointer;
 }
+
+.fil2 {
+  fill: #fafafa;
+}
+.fil0 {
+  fill: #fafafa;
+}
+.fil1 {
+  fill: #323232;
+  fill-rule: nonzero;
+}
+
+.tooth:hover .fil0,
+.tooth.active .fil0 {
+  fill: #7fe5d5;
+}
