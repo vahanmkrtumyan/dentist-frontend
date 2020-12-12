@@ -14,6 +14,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import SearchBar from 'material-ui-search-bar';
 import API from '../../services/api';
 import { makeStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,12 +36,11 @@ export default function AddClient({ handleSearch, handleAdd }) {
   const [state, setState] = React.useState({
     name: '',
     mobile: '',
-    email: '',
     dateOfBirth: new Date(),
   });
   const [search, setSearch] = React.useState('');
 
-  let { name, email, mobile, dateOfBirth } = state;
+  let { name, mobile, dateOfBirth } = state;
   return (
     <div>
       <div className='clients__addSearch'>
@@ -80,16 +80,6 @@ export default function AddClient({ handleSearch, handleAdd }) {
                     validators={['required']}
                     errorMessages={['this field is required']}
                   />
-                  <TextValidator
-                    className='mb-4 w-full'
-                    label='Էլ․ Հասցե'
-                    onChange={handleChange}
-                    type='email'
-                    name='email'
-                    value={email}
-                    validators={['isEmail']}
-                    errorMessages={['email is not valid']}
-                  />
                 </Grid>
                 <Grid item lg={6} md={6} sm={12} xs={12}>
                   <TextValidator
@@ -115,6 +105,18 @@ export default function AddClient({ handleSearch, handleAdd }) {
                       onChange={handleDateChange}
                     />
                   </MuiPickersUtilsProvider>
+                </Grid>
+                <Grid item lg={12} md={12} sm={12} xs={12}>
+                  <TextField
+                    id='outlined-multiline-static'
+                    fullWidth
+                    label='Նշումներ'
+                    name='comment'
+                    multiline
+                    rows='3'
+                    margin='normal'
+                    variant='outlined'
+                  />
                 </Grid>
               </Grid>
               <Button color='primary' variant='contained' type='submit'>
@@ -150,11 +152,7 @@ export default function AddClient({ handleSearch, handleAdd }) {
   }
 
   async function handleSubmit() {
-    const clientToSave = { ...state };
-    if (!state.email) {
-      delete state.email;
-    }
-    const client = await API.createClient(clientToSave);
+    const client = await API.createClient(state);
     handleAdd(client);
     setOpen(false);
   }

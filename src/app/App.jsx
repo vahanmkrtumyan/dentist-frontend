@@ -1,4 +1,3 @@
-import '../fake-db';
 import '../styles/_app.scss';
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';

@@ -2,40 +2,22 @@ import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import { ClientContext } from 'app/clientContext';
 import Typography from '@material-ui/core/Typography';
-import InlineSVG from 'svg-inline-react';
-import $ from 'jquery';
 
 const Client = () => {
   const { client, setClient } = React.useContext(ClientContext);
-
-  var doc = $(document);
-  doc.on('click touchstart', '.tooth', function (event) {
-    var $this = $(this),
-      toothText = $this.data('title'),
-      $numberText = $('.tooth-number'),
-      number;
-    console.log(toothText);
-    if (/(^|\s)active(\s|$)/.test($this.attr('className'))) {
-      $this.attr('className', 'tooth');
-      $numberText.html('&times;').data('title', 'Закрыть');
-      number = false;
-    } else {
-      $this
-        .attr('className', 'tooth active')
-        .siblings()
-        .attr('className', 'tooth');
-      $numberText
-        .html('<b>' + toothText + '</b>, հաջորդ քայլ')
-        .data('title', 'Следующий шаг');
-      number = toothText;
-    }
-  });
+  const [selected, setSelected] = useState();
 
   return (
     <Container>
       <div id='canvas_container'>
         <Typography variant='h5' component='h2'>
-          Կլիենտ
+          Պացիենտ
+        </Typography>
+        <Typography variant='h5' component='p'>
+          {client.name}
+        </Typography>
+        <Typography variant='h5' component='p'>
+          {client.phoneNumber}
         </Typography>
         <div
           className='tooth-number disabled'
@@ -51,16 +33,6 @@ const Client = () => {
           width='289.61084'
           height='370.54398'
         >
-          <title id='title3476'>Human Dental Arches</title>
-          <metadata id='metadata8'>
-            {/* <rdf:RDF>
-              <cc:Work rdf:about=''>
-                <dc:format>image/svg+xml</dc:format>
-                <dc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage' />
-                <dc:title>Human Dental Arches</dc:title>
-              </cc:Work>
-            </rdf:RDF> */}
-          </metadata>
           <defs>
             <marker refX='0' refY='0' orient='auto' overflow='visible'>
               <circle r='0.8' cy='0' cx='3' />
@@ -104,341 +76,137 @@ const Client = () => {
               />
             </marker>
           </defs>
-          <path
-            className='tooth-11 tooth-11-parent'
-            d='m 113.894,31.723601 c 0.0561,0.43476 3.08165,4.91178 3.84449,6.93412 1.03137,2.18327 2.67371,4.15697 7.0469,5.19412 3.57083,-0.36803 7.19248,-0.4467 10.19825,-4.03315 l 7.38989,-9.40518 1.34756,-2.99193 c 0.97308,-2.16029 -1.13419,-4.14679 -3.10702,-4.99829 l -5.34936,-1.19716 c -3.12438,-0.16807 -5.19809,-0.93656 -11.30278,0.59905 l -5.72815,1.04816 c -2.08382,0.77109 -4.86648,0.46927 -4.92056,4.35665 0.10953,1.48595 -0.58405,2.8577 0.58078,4.49361 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
-          />
-          <path
-            className='tooth-11'
-            d='m 119.37781,37.475811 -1.30961,-9.17465 c 0.71031,0 -0.79931,-1.85218 1.86701,-2.67885 9.73684,-3.18201 15.36382,-0.84956 16.95192,-0.1499 1.58809,0.69959 2.96678,2.61285 2.6621,4.62294 -0.30463,2.01002 -0.97137,2.49278 -1.42348,3.49091'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
-          />
-          <path
-            className='tooth-12 tooth-12-parent'
-            d='m 91.428666,35.605041 c 11.503464,-6.33738 9.146764,-4.4876 14.070254,-5.89646 1.71617,-0.51474 3.14074,-0.59168 3.86485,0.38286 l 2.6696,2.25199 c 1.81413,1.91332 1.6934,2.3195 1.92366,2.99912 0.8546,5.9162 -0.13307,5.84195 -0.32349,8.35998 -1.31549,2.1432 -2.9041,4.05602 -5.59189,5.04156 -1.65863,0.98199 -3.95557,0.88559 -6.39559,0.54752 l -4.012326,-0.81993 c -1.573083,0.19851 -2.928476,-0.68202 -4.307691,-1.44457 -2.910666,-1.71458 -3.662865,-4.14821 -4.663646,-6.49914 -0.201289,-1.52053 0.314192,-2.86745 1.499619,-4.05225 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
-          />
-          <path
-            className='tooth-12'
-            d='m 94.666436,46.343741 c -1.544027,-2.01495 -4.015778,-3.64326 -1.017236,-7.55177 2.750396,-1.80114 4.902858,-2.35706 7.29674,-3.41563 2.06063,-0.87054 4.10556,-1.71496 5.58118,-1.60995 6.1448,-0.49504 3.61491,0.73686 5.2752,1.13465'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
-          />
-          <path
-            className='tooth-12'
-            d='m 107.55706,37.262661 c 0.52599,2.30909 1.01611,4.67803 2.51107,5.37139'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
-          />
-          <path
-            className='tooth-12'
-            d='m 104.03277,46.863471 c 0.2176,-1.96646 -3.19877,-2.7984 -6.010321,-3.81921'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
-          />
+          <g onClick={() => setSelected(11)}>
+            <path
+              style={{ fill: selected === 11 ? 'teal' : 'white' }}
+              className='tooth-11 tooth-11-parent'
+              id='11'
+              d='m 113.894,31.723601 c 0.0561,0.43476 3.08165,4.91178 3.84449,6.93412 1.03137,2.18327 2.67371,4.15697 7.0469,5.19412 3.57083,-0.36803 7.19248,-0.4467 10.19825,-4.03315 l 7.38989,-9.40518 1.34756,-2.99193 c 0.97308,-2.16029 -1.13419,-4.14679 -3.10702,-4.99829 l -5.34936,-1.19716 c -3.12438,-0.16807 -5.19809,-0.93656 -11.30278,0.59905 l -5.72815,1.04816 c -2.08382,0.77109 -4.86648,0.46927 -4.92056,4.35665 0.10953,1.48595 -0.58405,2.8577 0.58078,4.49361 z'
+              className='toot'
+            />
+            <path
+              style={{ fill: selected === 11 ? 'teal' : 'white' }}
+              className='tooth-11'
+              d='m 119.37781,37.475811 -1.30961,-9.17465 c 0.71031,0 -0.79931,-1.85218 1.86701,-2.67885 9.73684,-3.18201 15.36382,-0.84956 16.95192,-0.1499 1.58809,0.69959 2.96678,2.61285 2.6621,4.62294 -0.30463,2.01002 -0.97137,2.49278 -1.42348,3.49091'
+              className='toot'
+            />
+          </g>
+          <g onClick={() => setSelected(12)}>
+            <path
+              style={{ fill: selected === 12 ? 'teal' : 'white' }}
+              className='tooth-12 tooth-12-parent'
+              d='m 91.428666,35.605041 c 11.503464,-6.33738 9.146764,-4.4876 14.070254,-5.89646 1.71617,-0.51474 3.14074,-0.59168 3.86485,0.38286 l 2.6696,2.25199 c 1.81413,1.91332 1.6934,2.3195 1.92366,2.99912 0.8546,5.9162 -0.13307,5.84195 -0.32349,8.35998 -1.31549,2.1432 -2.9041,4.05602 -5.59189,5.04156 -1.65863,0.98199 -3.95557,0.88559 -6.39559,0.54752 l -4.012326,-0.81993 c -1.573083,0.19851 -2.928476,-0.68202 -4.307691,-1.44457 -2.910666,-1.71458 -3.662865,-4.14821 -4.663646,-6.49914 -0.201289,-1.52053 0.314192,-2.86745 1.499619,-4.05225 z'
+              className='toot'
+            />
+
+            <path
+              style={{ fill: selected === 12 ? 'teal' : 'white' }}
+              className='tooth-12'
+              d='m 94.666436,46.343741 c -1.544027,-2.01495 -4.015778,-3.64326 -1.017236,-7.55177 2.750396,-1.80114 4.902858,-2.35706 7.29674,-3.41563 2.06063,-0.87054 4.10556,-1.71496 5.58118,-1.60995 6.1448,-0.49504 3.61491,0.73686 5.2752,1.13465'
+              className='toot'
+            />
+            <path
+              style={{ fill: selected === 12 ? 'teal' : 'white' }}
+              className='tooth-12'
+              d='m 107.55706,37.262661 c 0.52599,2.30909 1.01611,4.67803 2.51107,5.37139'
+              className='toot'
+            />
+            <path
+              style={{ fill: selected === 12 ? 'teal' : 'white' }}
+              className='tooth-12'
+              d='m 104.03277,46.863471 c 0.2176,-1.96646 -3.19877,-2.7984 -6.010321,-3.81921'
+              className='toot'
+            />
+          </g>
           <path
             className='tooth-13 tooth-13-parent'
             d='m 76.924949,61.279161 c -4.661053,-1.305 -6.843883,-3.69247 -7.339272,-6.81701 -0.575848,-3.05499 0.06037,-6.03463 2.258302,-8.91722 1.922291,-4.48919 3.829829,-4.24058 5.739016,-4.5421 1.703054,0.18022 3.25096,0.0983 4.758501,-0.0522 4.556612,-0.16942 6.253977,1.56471 7.352032,2.69905 3.845015,4.32077 3.420426,6.83837 4.35558,9.93011 0.481064,3.41383 0.268826,6.33289 -1.809063,7.91994 -6.322272,3.96823 -7.396961,2.02387 -10.042838,1.84972 -4.927107,-1.74143 -3.659851,-1.42841 -5.272258,-2.07053 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-13'
             d='m 74.039227,56.842881 c 0.221473,-4.22581 0.644762,-8.23493 3.005608,-10.16346 2.336081,-2.05381 5.341768,-3.54265 9.455081,-4.0972'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-13'
             d='m 88.421251,46.330051 c 2.787923,9.10135 3.996541,11.24926 -3.288822,5.60813'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-13'
             d='m 81.92554,55.113251 c 6.138064,6.23387 2.066664,5.31188 -4.543407,2.61052'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-14 tooth-14-parent'
             d='m 64.287549,60.689891 c -7.036983,2.05655 -7.499595,4.89403 -7.533489,7.78258 -0.357912,12.705 12.493542,12.48996 14.982456,11.51324 3.915814,0.40697 6.635348,0.029 8.775402,-0.72941 3.996026,-0.2573 5.920727,-2.26187 6.559363,-5.35139 0.584996,-1.65849 0.784388,-3.47976 -0.204908,-5.80303 -0.723248,-1.2977 -0.231398,-2.54169 -4.671496,-4.00347 -4.681827,-0.43301 -6.163843,-1.42956 -8.096137,-2.51347 -2.779381,-2.5312 -6.236813,-1.97896 -9.811191,-0.89505 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-14'
             d='m 70.978866,60.704571 c 0.0319,0.62403 0.571799,1.24913 -1.269769,1.86896 -3.189123,2.1702 -2.973255,3.77656 -2.247001,5.29849 1.476584,2.35431 0.950066,3.46905 -0.532899,3.99204 -4.599213,3.74372 -3.551609,4.51177 -4.778427,6.47835'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-14'
             d='m 65.279354,76.415121 c 4.29831,-0.5114 7.758754,-1.93772 8.717783,-6.09536 0.507031,-2.40736 -1.153684,-3.78149 -3.404816,-4.87414'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-14'
             d='m 80.848615,66.653581 c -5.617237,0.47275 -7.424129,1.68252 -6.70124,3.16737 -0.01555,3.9172 1.465284,2.98769 2.514615,4.24825'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-14'
             d='m 71.523837,76.678431 c 0.797156,-0.87177 0.530229,-1.74585 0.156881,-2.62015'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-14'
             d='m 76.168244,65.520251 c -1.961012,1.51323 -2.158947,2.29157 -2.165412,2.99014'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-14'
             d='m 82.63766,65.160111 c 1.377059,2.5781 0.0085,4.69009 0.27693,6.55188 0.256583,2.59532 -0.660889,4.80462 -3.959888,6.23063 -2.028464,0.95862 -4.49012,1.15425 -6.695376,1.29552'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-15 tooth-15-parent'
             d='m 57.473765,80.464991 c -8.431027,1.00936 -12.429637,4.65891 -9.877252,12.21083 2.688393,2.77158 5.132545,5.74701 9.695968,6.95317 1.616986,-0.0283 3.036904,0.10824 4.006631,0.620389 1.399996,0.32137 3.003957,0.31919 4.73703,0.11232 3.263724,-1.454589 7.652073,-0.2444 9.490541,-5.075989 1.517631,-3.86591 1.258553,-7.27018 -2.398877,-9.79138 -7.228529,-5.07305 -11.201614,-4.64639 -15.654041,-5.02934 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-15'
             d='m 64.017607,99.560231 c 3.218535,-1.83743 7.516836,-0.29878 8.940041,-5.84531 0.251569,-1.76849 1.693998,-3.85582 -1.610955,-7.92747'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-15'
             d='m 59.537149,80.979141 c -1.068561,1.04034 -2.062091,2.01914 -1.663212,3.13974 -0.465371,1.29699 -0.463993,1.67812 -0.539801,2.15625 -0.660628,1.03004 -0.710131,1.29501 -0.733588,1.52747 0.02241,1.78692 0.379987,2.18359 0.720566,2.65202 0.962308,2.36493 0.08107,2.86361 -0.497281,3.66865 -0.586201,0.7973 -1.405345,0.40277 -1.708838,2.64665'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-15'
             d='m 65.803025,97.201131 c -4.094686,-1.19002 -4.354798,-3.01483 -3.628538,-5.00291 -0.431478,-3.19923 1.120741,-5.05945 2.209051,-7.23283'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-15'
             d='m 68.144634,86.400831 c -1.701079,0.17297 -3.401807,0.21793 -5.104514,0.90622'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-15'
             d='m 60.255473,84.344691 c 1.8564,1.33738 2.431475,2.4029 3.025951,3.47262'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-15'
             d='m 57.544054,96.877191 c 0.78275,-0.67 2.222159,-1.66864 4.62569,-3.14996'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-16 tooth-16-parent'
@@ -471,72 +239,27 @@ const Client = () => {
           <path
             className='tooth-16'
             d='m 57.646425,102.99366 c -0.835531,0.82319 -1.950837,0.9361 -2.196631,3.25721 0.377749,2.37943 -1.179557,4.75452 -2.694602,7.12975 -1.566707,1.27953 -1.058127,4.7477 -1.480204,7.23439 1.534795,1.22758 3.073385,1.24141 4.612322,1.13147 l 2.90866,2.14709'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-16'
             d='m 43.289755,110.40366 c 1.041394,0.9471 1.818882,2.04093 4.731337,1.94719 1.660625,-0.17834 3.320994,-0.2683 4.978341,0.62258'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-16'
             d='m 61.629168,111.25942 c -3.1824,0.45917 -7.886313,0.27574 -8.751252,1.71372'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-16'
             d='m 45.076555,121.72273 c 3.240786,1.23084 4.613615,-0.0607 6.31926,-0.90363'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-16'
             d='m 47.737092,125.50026 1.469421,-3.76848'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <g
             onClick={() => {
@@ -679,16 +402,7 @@ const Client = () => {
           <path
             className='tooth-18'
             d='m 46.117259,177.48517 c 0.175593,-0.0976 -2.921599,-1.75352 -5.09408,-2.45767 -1.110909,-0.36007 -1.775158,-1.48015 -2.057348,-2.451 -0.580852,-1.99823 1.725136,-4.53333 0.990856,-6.11418 -0.734366,-1.58083 -2.277959,-1.65191 -3.637421,-2.14869 -0.910132,-0.33257 -1.450364,-0.055 -2.913751,-0.51604'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-18'
@@ -709,30 +423,12 @@ const Client = () => {
           <path
             className='tooth-18'
             d='m 33.619229,173.17633 c 0.782922,-0.32756 1.790594,-0.72316 3.038028,-0.40109 1.24743,0.32207 1.898657,0.42253 2.309522,-0.50459'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-18'
             d='m 44.189019,172.58793 c -1.823454,-0.063 -3.816982,0.85557 -5.341772,-0.92916'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-18'
@@ -751,352 +447,127 @@ const Client = () => {
           <path
             className='tooth-18'
             d='m 40.051296,163.38475 c 0.439499,0.91238 0.673738,1.78972 -0.09978,2.49567'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-21 tooth-21-parent'
             d='m 175.14525,31.757761 c -0.0561,0.43475 -3.08166,4.91178 -3.84449,6.93411 -1.0314,2.18329 -2.67373,4.15698 -7.0469,5.19413 -3.57085,-0.36803 -7.1925,-0.4467 -10.19825,-4.03314 l -7.38988,-9.40519 -1.34757,-2.99194 c -0.9731,-2.16026 1.13418,-4.14677 3.10702,-4.99829 l 5.34936,-1.19716 c 3.12437,-0.16804 5.19808,-0.93654 11.30286,0.59906 l 5.72806,1.04815 c 2.08381,0.77109 4.86648,0.46928 4.92055,4.35667 -0.10952,1.48594 0.58404,2.85768 -0.58076,4.4936 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-21'
             d='m 169.66144,37.509981 1.30961,-9.17466 c -0.71032,0 0.7993,-1.85217 -1.86701,-2.67886 -9.73684,-3.182 -15.36382,-0.84955 -16.95192,-0.14988 -1.5881,0.69959 -2.96678,2.61284 -2.6621,4.62295 0.30462,2.01002 0.97136,2.49275 1.42345,3.49089'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-22 tooth-22-parent'
             d='m 197.61055,35.639201 c -11.50344,-6.33737 -9.14675,-4.48759 -14.07014,-5.89645 -1.71628,-0.51475 -3.14085,-0.59168 -3.86493,0.38286 l -2.6696,2.25197 c -1.81414,1.91334 -1.69341,2.3195 -1.92368,2.99912 -0.8546,5.91623 0.13307,5.84197 0.32351,8.35999 1.31548,2.14319 2.90408,4.05601 5.59188,5.04157 1.65864,0.98198 3.95557,0.88558 6.39568,0.54751 l 4.01223,-0.81994 c 1.57309,0.19854 2.92847,-0.682 4.30771,-1.44456 2.91064,-1.71458 3.66285,-4.14822 4.66364,-6.49912 0.20138,-1.52056 -0.3142,-2.86746 -1.49962,-4.05227 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-22'
             d='m 194.37281,46.377911 c 1.54403,-2.01495 4.01577,-3.64326 1.01732,-7.55179 -2.75048,-1.80114 -4.90296,-2.35706 -7.29682,-3.41563 -2.06065,-0.87054 -4.10556,-1.71494 -5.5812,-1.60991 -6.14478,-0.49508 -3.61489,0.73684 -5.27519,1.13463'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-22'
             d='m 181.48219,37.296831 c -0.52601,2.30907 -1.01613,4.67802 -2.51109,5.37138'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-22'
             d='m 185.00647,46.897631 c -0.2176,-1.96645 3.19887,-2.79841 6.0103,-3.8192'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-23 tooth-23-parent'
             d='m 212.11427,61.313331 c 4.66114,-1.30502 6.84388,-3.69249 7.33927,-6.81702 0.57587,-3.05499 -0.0603,-6.03464 -2.25828,-8.91722 -1.92229,-4.48919 -3.82983,-4.24058 -5.73902,-4.54209 -1.70306,0.18022 -3.25096,0.0983 -4.75842,-0.0522 -4.5566,-0.16945 -6.25405,1.56469 -7.35212,2.69903 -3.84499,4.32077 -3.42041,6.83837 -4.35558,9.93012 -0.48096,3.41382 -0.26881,6.33281 1.80909,7.91996 6.32226,3.96822 7.39694,2.02383 10.04283,1.84969 4.9271,-1.74142 3.65983,-1.4284 5.27223,-2.07051 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-23'
             d='m 215.00002,56.877051 c -0.22149,-4.22583 -0.64477,-8.23494 -3.00562,-10.16346 -2.33609,-2.05383 -5.34176,-3.54266 -9.455,-4.09721'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-23'
             d='m 200.61798,46.364221 c -2.78783,9.10135 -3.99653,11.24924 3.28882,5.60813'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-23'
             d='m 207.1137,55.147401 c -6.13808,6.23388 -2.06668,5.31188 4.54339,2.61055'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-24 tooth-24-parent'
             d='m 224.75169,60.724041 c 7.03697,2.05657 7.49958,4.89405 7.53348,7.78258 0.35791,12.70499 -12.49354,12.48997 -14.98244,11.51326 -3.91582,0.40698 -6.63535,0.029 -8.77541,-0.72941 -3.99602,-0.25729 -5.92072,-2.2619 -6.55937,-5.35139 -0.585,-1.65851 -0.78439,-3.47976 0.20492,-5.80302 0.72324,-1.2977 0.23147,-2.54171 4.67149,-4.00347 4.68183,-0.43303 6.16383,-1.42957 8.09613,-2.51347 2.77947,-2.5312 6.23681,-1.97897 9.8112,-0.89508 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-24'
             d='m 218.06036,60.738741 c -0.0319,0.62401 -0.57179,1.24913 1.26978,1.86895 3.18911,2.1702 2.97324,3.77656 2.24699,5.29848 -1.47657,2.35432 -0.95007,3.46905 0.5329,3.99205 4.59921,3.74369 3.55163,4.51176 4.77844,6.47835'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-24'
             d='m 223.75987,76.449301 c -4.2983,-0.51142 -7.75877,-1.93772 -8.71777,-6.09536 -0.50705,-2.40737 1.15368,-3.7815 3.40482,-4.87417'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-24'
             d='m 208.19063,66.687721 c 5.61724,0.47279 7.4241,1.68254 6.70123,3.1674 0.0155,3.91721 -1.46528,2.98767 -2.51461,4.24825'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-24'
             d='m 217.51538,76.712591 c -0.79714,-0.87176 -0.53022,-1.74585 -0.15685,-2.62016'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-24'
             d='m 212.87098,65.554401 c 1.96102,1.51324 2.15897,2.29157 2.16542,2.99014'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-24'
             d='m 206.40158,65.194271 c -1.37707,2.57808 -0.008,4.69007 -0.27693,6.55189 -0.25648,2.59533 0.66089,4.80461 3.95989,6.23062 2.02854,0.95861 4.49012,1.15426 6.69537,1.29552'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-24'
             d='m 225.02162,99.594371 c -3.21853,-1.83738 -7.51683,-0.29875 -8.94004,-5.84528 -0.25158,-1.76851 -1.69398,-3.85583 1.61096,-7.92747'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-25 tooth-25-parent'
             d='m 231.56547,80.499151 c 8.43103,1.00936 12.42965,4.65893 9.87724,12.21084 -2.68839,2.77156 -5.13256,5.747 -9.69595,6.95315 -1.617,-0.0283 -3.03691,0.10824 -4.00664,0.620389 -1.39999,0.32136 -3.00395,0.31919 -4.73702,0.11232 -3.26373,-1.454619 -7.65208,-0.24442 -9.49055,-5.075989 -1.51762,-3.86591 -1.25854,-7.27018 2.39888,-9.7914 7.22853,-5.07305 11.20162,-4.64639 15.65404,-5.02933 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-25'
             d='m 229.50209,81.013321 c 1.06855,1.04032 2.06208,2.01913 1.66319,3.13973 0.46539,1.29698 0.46401,1.67811 0.53981,2.15622 0.66065,1.03005 0.71015,1.29504 0.7336,1.5275 -0.0224,1.7869 -0.37999,2.18358 -0.72057,2.65199 -0.96231,2.36497 -0.081,2.86364 0.49728,3.66867 0.58621,0.7973 1.40534,0.40278 1.70884,2.64664'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-25'
             d='m 223.23621,97.235281 c 4.09468,-1.19 4.35479,-3.01479 3.62853,-5.0029 0.43149,-3.19923 -1.12073,-5.05943 -2.20904,-7.23282'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-25'
             d='m 220.89459,86.435001 c 1.70108,0.17298 3.40182,0.21791 5.10452,0.90621'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-25'
             d='m 228.78376,84.378861 c -1.85639,1.33738 -2.43148,2.40289 -3.02595,3.47261'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-25'
             d='m 231.49517,96.911331 c -0.78273,-0.66998 -2.22215,-1.66862 -4.62568,-3.14995'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-26 tooth-26-parent'
@@ -1129,86 +600,32 @@ const Client = () => {
           <path
             className='tooth-26'
             d='m 231.39281,103.02781 c 0.8356,0.82321 1.95083,0.93613 2.19664,3.25722 -0.37776,2.37943 1.17955,4.75452 2.69459,7.12975 1.56671,1.27953 1.05814,4.7477 1.4802,7.23441 -1.53479,1.22756 -3.07337,1.24138 -4.61231,1.13144 l -2.90868,2.1471'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-26'
             d='m 245.74949,110.4378 c -1.04132,0.94712 -1.81888,2.04093 -4.73136,1.94721 -1.66063,-0.17833 -3.32098,-0.26828 -4.97832,0.62258'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-26'
             d='m 227.41007,111.29357 c 3.18248,0.45916 7.8863,0.27578 8.75124,1.71373'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-26'
             d='m 243.96268,121.75689 c -3.24079,1.23082 -4.6136,-0.0607 -6.31927,-0.90361'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-26'
             d='m 241.30213,125.5344 -1.46941,-3.76845'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-27 tooth-27-parent'
             d='m 260.30839,143.73962 c 1.73849,-1.9993 1.51117,-4.90954 0.3386,-8.25772 -4.47424,-8.60051 -12.51244,-10.45412 -25.03488,-3.81871 -3.92788,1.33064 -7.04171,3.8892 -9.09018,6.44212 -2.01502,2.5113 -3.88589,3.72012 -2.88985,8.1614 2.29978,7.48127 6.27207,13.34987 17.52981,12.19409 4.47305,-0.45661 8.42319,0.52634 14.08064,-3.19106 2.19006,-3.04194 6.41016,-2.83937 5.06586,-11.53012 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-27'
@@ -1227,86 +644,32 @@ const Client = () => {
           <path
             className='tooth-27'
             d='m 237.08534,136.65497 c 1.14411,0.52176 1.96903,0.51148 2.79542,0.50352 2.2069,-0.27488 3.13437,0.70957 3.40844,2.33708 0.0293,1.02341 -0.29633,2.14689 1.58742,2.64692 1.6231,1.24228 0.81335,1.80991 0.61525,2.54712 0.0441,1.15673 0.087,1.93303 0.12945,2.54816 0.0371,4.1522 -1.31805,4.06317 -2.16929,5.50947 -0.5129,0.46886 -1.14686,0.90412 -0.72377,1.63258 l -0.96945,0.71573'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-27'
             d='m 244.60123,131.74542 c -0.46355,0.85048 -0.91427,1.70098 -1.69262,2.55217 -0.86433,0.54277 -1.22958,1.71027 -1.44813,3.0613'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-27'
             d='m 253.23095,133.45942 c -1.63491,0.0586 -3.27293,0.11454 -3.64026,1.23126 -2.07131,1.28613 -4.14885,2.57607 -6.42551,3.98972'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-27'
             d='m 256.29667,142.72905 -4.73575,0.52008 c -1.78134,0.64501 -3.64733,1.07869 -6.07319,0.11535'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-27'
             d='m 246.98225,155.18594 -1.21751,-0.91476 c 0.33714,-2.61552 -0.28124,-3.00779 -1.22294,-2.64764'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-27'
             d='m 245.49314,145.0974 -2.5515,-0.19832 c -1.1317,0.65508 -2.26417,1.04483 -3.39671,1.43464'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-28 tooth-28-parent'
@@ -1339,16 +702,7 @@ const Client = () => {
           <path
             className='tooth-28'
             d='m 242.92197,177.51932 c -0.17558,-0.0976 2.92161,-1.7535 5.09409,-2.45766 1.11089,-0.36006 1.77514,-1.48016 2.05735,-2.451 0.58086,-1.99824 -1.72516,-4.53335 -0.99087,-6.11417 0.73438,-1.58084 2.27804,-1.65192 3.63744,-2.14869 0.91012,-0.33257 1.45045,-0.0551 2.91374,-0.51604'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-28'
@@ -1369,44 +723,17 @@ const Client = () => {
           <path
             className='tooth-28'
             d='m 255.42,173.21051 c -0.78292,-0.32757 -1.79059,-0.72318 -3.03801,-0.40111 -1.24745,0.32206 -1.89866,0.42253 -2.30953,-0.5046'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-28'
             d='m 244.85021,172.62209 c 1.82345,-0.063 3.81698,0.85555 5.34178,-0.92914'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-28'
             d='m 248.98794,163.41892 c -0.43951,0.91237 -0.67374,1.7897 0.0998,2.49565'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='tooth-31 tooth-31-parent'
@@ -2672,142 +1999,52 @@ const Client = () => {
           <path
             className='child-tooth-51 child-tooth-51-parent'
             d='m 124.82021,113.33987 c 0.0372,0.31136 2.03838,3.51786 2.54294,4.9663 0.6822,1.56367 1.76853,2.97726 4.66113,3.72006 2.36193,-0.26358 4.75744,-0.31994 6.74559,-2.88856 l 4.88802,-6.73611 0.89133,-2.14285 c 0.64364,-1.54722 -0.75021,-2.96997 -2.05513,-3.57982 l -3.5383,-0.85742 c -2.0666,-0.1203 -3.43827,-0.67078 -7.47617,0.42903 l -3.78887,0.7507 c -1.37832,0.55227 -3.21888,0.3361 -3.25466,3.12031 0.0725,1.06423 -0.38632,2.04669 0.38412,3.21836 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-51'
             d='m 128.44747,117.45968 -0.86624,-6.57101 c 0.46983,0 -0.52869,-1.32654 1.23491,-1.91862 6.44042,-2.27899 10.16234,-0.60845 11.21278,-0.10742 1.05044,0.50107 1.96238,1.87137 1.76084,3.31101 -0.20149,1.43962 -0.64251,1.78532 -0.94153,2.50024'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-52 child-tooth-52-parent '
             d='m 110.54038,116.16246 c 7.26885,-5.12134 5.77969,-3.6265 8.89074,-4.76501 1.08442,-0.41599 1.98459,-0.47815 2.44213,0.30939 l 1.68688,1.81986 c 1.14633,1.54619 1.07002,1.87443 1.21553,2.42363 0.54002,4.781 -0.0841,4.72099 -0.20441,6.75586 -0.83124,1.73196 -1.83506,3.27773 -3.53342,4.07416 -1.04808,0.79357 -2.49943,0.71568 -4.04124,0.44247 l -2.53533,-0.66262 c -0.994,0.16044 -1.85046,-0.55112 -2.72196,-1.16735 -1.83919,-1.38559 -2.3145,-3.35226 -2.94688,-5.25208 -0.1272,-1.22877 0.19854,-2.31724 0.94759,-3.27469 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-52'
             d='m 112.58627,124.84061 c -0.97564,-1.62832 -2.53749,-2.94419 -0.64278,-6.10275 1.73794,-1.45551 3.09805,-1.90477 4.61068,-2.76021 1.30209,-0.7035 2.59424,-1.38589 3.52665,-1.30102 3.8828,-0.40005 2.28421,0.59546 3.3333,0.91692'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-52'
             d='m 120.73164,117.50203 c 0.33235,1.866 0.64206,3.78039 1.5867,4.3407'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-52'
             d='m 117.09124,123.9055 c 0.13748,-1.58912 -2.02127,-2.26145 -3.79782,-3.08637'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-53 child-tooth-53-parent '
             d='m 103.01062,138.38843 c -3.08304,-0.93467 -4.526843,-2.64459 -4.854532,-4.88241 -0.380883,-2.18802 0.04,-4.32209 1.493748,-6.38662 1.271494,-3.21518 2.533244,-3.03715 3.796044,-3.25309 1.12646,0.12908 2.15034,0.0704 3.14749,-0.0374 3.01396,-0.12134 4.13666,1.12068 4.86298,1.9331 2.54325,3.09457 2.26243,4.89771 2.88096,7.11205 0.31819,2.44502 0.1778,4.53569 -1.19659,5.67236 -4.18183,2.84207 -4.89268,1.4495 -6.64278,1.32478 -3.25902,-1.24726 -2.42079,-1.02305 -3.48732,-1.48294 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-53'
             d='m 100.39514,134.53356 c 0.1465,-3.02657 0.42649,-5.89795 1.98804,-7.27916 1.5452,-1.47098 3.53329,-2.53728 6.25402,-2.93446'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-53'
             d='m 108.49459,127.00418 c 1.84406,6.51847 2.6435,8.05682 -2.17536,4.01659'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-53'
             d='m 106.18196,133.29479 c 4.06,4.46477 1.36698,3.80443 -3.00522,1.86967'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-54 child-tooth-54-parent '
@@ -2840,170 +2077,62 @@ const Client = () => {
           <path
             className='child-tooth-54'
             d='m 100.6896,140.35381 c -0.55264,0.5896 -1.290369,0.67048 -1.452949,2.33289 0.249861,1.70416 -0.780214,3.40521 -1.782327,5.10638 -1.036306,0.91642 -0.699891,3.40036 -0.979079,5.18135 1.015171,0.87922 2.03288,0.88911 3.050798,0.81037 l 1.923927,1.53778'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-54'
             d='m 91.193447,145.66094 c 0.68882,0.67833 1.203096,1.46173 3.129528,1.39462 1.0984,-0.12772 2.19665,-0.19216 3.292888,0.44589'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-54'
             d='m 103.32397,146.27386 c -2.105,0.32886 -5.216376,0.19749 -5.788465,1.22738'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-54'
             d='m 92.375329,153.76781 c 2.143597,0.88152 3.051647,-0.0435 4.179828,-0.64719'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-54'
             d='m 94.135111,156.47331 0.971964,-2.69902'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-55 child-tooth-55-parent '
             d='m 76.99988,167.95696 c -1.149931,-1.43191 -0.999555,-3.51625 -0.223961,-5.91426 2.959466,-6.15977 8.276337,-7.48734 16.559191,-2.735 2.598099,0.95303 4.657723,2.7855 6.012653,4.61391 1.332827,1.79864 2.570317,2.66442 1.911497,5.84527 -1.521172,5.35819 -4.148659,9.56132 -11.595024,8.73357 -2.958672,-0.32704 -5.57148,0.37695 -9.313547,-2.28547 -1.448637,-2.17867 -4.239982,-2.0336 -3.350809,-8.25802 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-55'
             d='m 92.360652,162.88288 c -0.756768,0.37367 -1.30241,0.36632 -1.849015,0.3606 -1.459731,-0.19685 -2.073195,0.50821 -2.25449,1.67385 -0.01932,0.73297 0.196014,1.53762 -1.049981,1.89579 -1.073609,0.88971 -0.538007,1.29625 -0.406966,1.82425 -0.02903,0.82846 -0.0576,1.38445 -0.08563,1.825 -0.02447,2.97386 0.871829,2.91011 1.434868,3.94594 0.339251,0.3358 0.758596,0.64756 0.478742,1.16928 l 0.641237,0.51262'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-55'
             d='m 87.389301,159.36659 c 0.306624,0.60915 0.604758,1.21826 1.119579,1.82792 0.571715,0.38871 0.813305,1.22489 0.957866,2.19253'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-55'
             d='m 81.681215,160.59418 c 1.081407,0.042 2.164885,0.0821 2.40785,0.88184 1.370035,0.92114 2.74421,1.84501 4.250115,2.85748'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-55'
             d='m 79.653417,167.23317 3.132436,0.37253 c 1.178264,0.46195 2.412495,0.77255 4.017083,0.0824'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-55'
             d='m 85.814392,176.15496 0.805311,-0.65519 c -0.222994,-1.87325 0.186028,-2.1542 0.808964,-1.89627'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-55'
             d='m 86.799338,168.92944 1.687702,-0.14205 c 0.748556,0.46918 1.497622,0.74832 2.246733,1.0275'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-55'
@@ -3022,142 +2151,52 @@ const Client = () => {
           <path
             className='child-tooth-61 child-tooth-61-parent '
             d='m 165.33459,113.36434 c -0.0372,0.31137 -2.03838,3.51787 -2.54292,4.96628 -0.68223,1.56368 -1.76853,2.97728 -4.66113,3.72008 -2.36193,-0.26357 -4.75744,-0.31992 -6.74561,-2.88858 l -4.88802,-6.73607 -0.89133,-2.14289 c -0.64363,-1.5472 0.75022,-2.96996 2.05514,-3.5798 l 3.53829,-0.85744 c 2.06661,-0.12041 3.43827,-0.67075 7.47624,0.42907 l 3.7888,0.75068 c 1.37834,0.55226 3.21891,0.33611 3.25466,3.12029 -0.0725,1.06424 0.38634,2.04671 -0.38412,3.21838 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-61'
             d='m 161.70734,117.48414 0.86624,-6.57099 c -0.46982,0 0.52869,-1.32655 -1.23492,-1.91863 -6.4404,-2.27897 -10.16234,-0.60846 -11.21278,-0.10742 -1.05044,0.50104 -1.96238,1.87133 -1.76083,3.311 0.20149,1.43959 0.64252,1.78533 0.94154,2.50021'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-62 child-tooth-62-parent '
             d='m 180.36094,116.24854 c -7.57478,-5.32687 -6.02296,-3.77204 -9.26492,-4.95626 -1.13012,-0.43265 -2.06815,-0.49734 -2.54498,0.32182 l -1.75787,1.8929 c -1.19456,1.60823 -1.11506,1.94965 -1.2667,2.52087 -0.56273,4.97288 0.0876,4.91047 0.21305,7.027 0.86618,1.80146 1.91227,3.40925 3.68212,4.23767 1.09218,0.82539 2.60468,0.74438 4.2114,0.46019 l 2.64199,-0.6892 c 1.03584,0.16688 1.92835,-0.57323 2.83654,-1.21421 1.91662,-1.44118 2.41191,-3.48678 3.07092,-5.46283 0.13261,-1.27807 -0.20688,-2.41023 -0.98747,-3.4061 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-62'
             d='m 178.22895,125.27493 c 1.01672,-1.69367 2.6443,-3.06234 0.6699,-6.34761 -1.81116,-1.51397 -3.22854,-1.98124 -4.80484,-2.87103 -1.35685,-0.73172 -2.70341,-1.4415 -3.6751,-1.35323 -4.0462,-0.41611 -2.38035,0.61938 -3.47359,0.95373'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-62'
             d='m 169.74074,117.64185 c -0.34636,1.94088 -0.66909,3.9321 -1.6535,4.51489'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-62'
             d='m 172.06141,125.71178 c -0.1433,-1.6529 2.10639,-2.35221 3.95768,-3.21022'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-63 child-tooth-63-parent '
             d='m 190.54157,135.47822 c 3.08307,-0.93464 4.52683,-2.64457 4.85452,-4.88239 0.38088,-2.18804 -0.0399,-4.32208 -1.49376,-6.38661 -1.27151,-3.21521 -2.53322,-3.03715 -3.79603,-3.2531 -1.12648,0.12907 -2.15034,0.0704 -3.14743,-0.0373 -3.01397,-0.12136 -4.13673,1.12063 -4.86302,1.93308 -2.54327,3.09458 -2.26245,4.8977 -2.88098,7.11208 -0.31814,2.44499 -0.1778,4.53561 1.19657,5.6723 4.18185,2.8421 4.8927,1.44955 6.64278,1.32481 3.25904,-1.24723 2.42081,-1.02304 3.48735,-1.48295 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-63'
             d='m 192.45029,133.65605 c -0.14647,-3.02659 -0.42647,-5.89797 -1.98804,-7.2792 -1.54518,-1.47097 -3.53329,-2.53727 -6.25395,-2.93444'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-63'
             d='m 182.93738,126.12663 c -1.844,6.51849 -2.6435,8.05683 2.17539,4.0166'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-63'
             d='m 187.23393,132.41724 c -4.06,4.46477 -1.36697,3.80445 3.00523,1.8697'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-64 child-tooth-64-parent '
@@ -3190,86 +2229,32 @@ const Client = () => {
           <path
             className='child-tooth-64'
             d='m 192.72633,137.55673 c 0.55271,0.58956 1.29035,0.67045 1.45294,2.33284 -0.24986,1.70417 0.78021,3.40523 1.78232,5.1064 1.03631,0.91641 0.69991,3.40036 0.97909,5.18136 -1.01518,0.8792 -2.03288,0.8891 -3.05081,0.81035 l -1.92393,1.53778'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-64'
             d='m 202.22248,142.86383 c -0.68877,0.67834 -1.20311,1.46175 -3.12953,1.3946 -1.09842,-0.12773 -2.19665,-0.19215 -3.2929,0.4459'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-64'
             d='m 188.95105,143.47675 c 2.10502,0.32885 5.21636,0.1975 5.78846,1.22738'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-64'
             d='m 201.0406,150.97069 c -2.14361,0.88152 -3.05166,-0.0435 -4.17982,-0.64718'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-64'
             d='m 199.28078,153.6762 -0.97192,-2.69903'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-65 child-tooth-65-parent '
             d='m 211.85238,167.75167 c 1.14994,-1.43192 0.99957,-3.51626 0.22396,-5.91425 -2.95947,-6.15977 -8.27628,-7.48737 -16.55919,-2.73499 -2.59808,0.953 -4.65771,2.78547 -6.01265,4.6139 -1.33281,1.79862 -2.57033,2.66438 -1.91149,5.84527 1.52117,5.35818 4.14865,9.56133 11.59503,8.73358 2.95865,-0.32704 5.57148,0.37694 9.31355,-2.28548 1.44863,-2.1787 4.23997,-2.03361 3.35079,-8.25803 z'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-65'
@@ -3288,86 +2273,32 @@ const Client = () => {
           <path
             className='child-tooth-65'
             d='m 196.49161,162.67757 c 0.75678,0.37371 1.30243,0.36634 1.84901,0.36064 1.45974,-0.19688 2.07321,0.50821 2.25452,1.67384 0.0193,0.73298 -0.19603,1.53763 1.04996,1.89575 1.07361,0.88974 0.53801,1.29628 0.40698,1.82428 0.029,0.82847 0.0575,1.38446 0.0855,1.82503 0.0245,2.97384 -0.87181,2.91007 -1.43487,3.94591 -0.33924,0.33582 -0.75858,0.64754 -0.47872,1.16929 l -0.64124,0.51261'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-65'
             d='m 201.46298,159.16131 c -0.30665,0.60913 -0.60478,1.21826 -1.11959,1.8279 -0.57171,0.38872 -0.81331,1.22491 -0.95787,2.19252'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-65'
             d='m 207.17105,160.3889 c -1.08141,0.042 -2.16488,0.082 -2.40784,0.88183 -1.37004,0.92112 -2.74422,1.84502 -4.25013,2.8575'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-65'
             d='m 209.19886,167.02791 -3.13244,0.37247 c -1.17827,0.46198 -2.4125,0.77258 -4.01709,0.0826'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-65'
             d='m 203.03787,175.94966 -0.8053,-0.65515 c 0.22299,-1.87327 -0.18603,-2.15422 -0.8089,-1.89629'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-65'
             d='m 202.05294,168.72414 -1.68772,-0.14203 c -0.74855,0.46918 -1.4976,0.74829 -2.24671,1.0275'
-            style={{
-              fill: 'none',
-              stroke: '#000000',
-              strokeWidth: 1,
-              strokeLinecap: 'round',
-              strokeLinejoin: 'miter',
-              strokeMiterlimit: 4,
-              strokeOpacity: 1,
-              strokeDasharray: 'none',
-            }}
+            className='toot'
           />
           <path
             className='child-tooth-71 child-tooth-71-parent '

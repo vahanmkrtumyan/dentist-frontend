@@ -43,11 +43,6 @@ function Clients() {
           {item.mobile}
         </TableCell>
       ),
-      'Էլ հասցե': (
-        <TableCell className='px-0' align='left' style={{ cursor: 'pointer' }}>
-          {item.email}
-        </TableCell>
-      ),
       Պարտք: (
         <TableCell className='px-0' align='left' style={{ cursor: 'pointer' }}>
           {item.debt || 0}
@@ -71,7 +66,7 @@ function Clients() {
         <PaginationTable
           handleClick={handleClick}
           bodyData={listData}
-          thead={['Անուն', 'Ծնված', 'Հեռախոս', 'Էլ հասցե', 'Պարտք']}
+          thead={['Անուն', 'Ծնված', 'Հեռախոս', 'Պարտք']}
         />
       </SimpleCard>
     </div>
