@@ -6,33 +6,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Grid, Icon } from "@material-ui/core";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import SearchBar from "material-ui-search-bar";
-import API from "../../services/api";
-import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginRight: "20px",
-    "@media screen and (max-width: 767px)": {
-      marginRight: "0",
-      marginBottom: "20px",
-    },
-  },
-  progress: {
-    margin: theme.spacing(2),
-  },
-}));
-
-export default function AddClient({ handleSearch, handleAdd }) {
-  const classes = useStyles();
-
-  const [open, setOpen] = React.useState(false);
+function AddEvent({ slotHandler }) {
   const [state, setState] = React.useState({
     name: "",
     mobile: "",
@@ -56,40 +32,15 @@ export default function AddClient({ handleSearch, handleAdd }) {
     setState(newState);
   }
 
-  async function handleSubmit() {
-    const client = await API.createClient(state);
-    handleAdd(client);
-    setOpen(false);
-  }
-
-  function handleClickOpen() {
-    setOpen(true);
-  }
-
+  function handleSubmit() {}
   function handleClose() {
-    setOpen(false);
+    slotHandler(null);
   }
-
-  let { name, mobile, dateOfBirth } = state;
+  let { name, mobile } = state;
   return (
     <div>
-      <div className="clients__addSearch">
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.root}
-          onClick={handleClickOpen}
-        >
-          Նոր Պացիենտ
-        </Button>
-        <SearchBar
-          value={search}
-          onChange={(newValue) => setSearch(newValue)}
-          onRequestSearch={() => handleSearch(search)}
-        />
-      </div>
       <Dialog
-        open={open}
+        open={true}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
@@ -122,19 +73,19 @@ export default function AddClient({ handleSearch, handleAdd }) {
                     validators={["required"]}
                     errorMessages={["this field is required"]}
                   />
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                      className="mb-4 w-full"
-                      margin="none"
-                      label="Ծննդյան տարեթիվ"
-                      name="dateOfBirth"
-                      autoOk={true}
-                      format="d/MM/yy"
-                      disableFuture={true}
-                      value={dateOfBirth}
-                      onChange={handleDateChange}
-                    />
-                  </MuiPickersUtilsProvider>
+                  {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    className="mb-4 w-full"
+                    margin="none"
+                    label="Ծննդյան տարեթիվ"
+                    name="dateOfBirth"
+                    autoOk={true}
+                    format="d/MM/yy"
+                    disableFuture={true}
+                    value={dateOfBirth}
+                    onChange={handleDateChange}
+                  />
+                </MuiPickersUtilsProvider> */}
                 </Grid>
                 <Grid item lg={12} md={12} sm={12} xs={12}>
                   <TextField
@@ -165,3 +116,5 @@ export default function AddClient({ handleSearch, handleAdd }) {
     </div>
   );
 }
+
+export default AddEvent;
